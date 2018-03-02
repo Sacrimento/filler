@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 17:14:04 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 15:51:26 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 16:21:39 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void 	parse(int *end, t_global *global)
 	*end = 1;
 	trash_line();
 	fill_lines(global);
-	ft_printf("%d\n", global->size.y);
 	int j = 0;
 	while (global->map[j])
 		ft_printf("MAP %s\n", global->map[j++]);

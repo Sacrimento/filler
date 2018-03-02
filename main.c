@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 15:52:16 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 16:16:34 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int		main(void)
 		return (1);
 	//while (end)
 	{
-		parse(global);
-		//heat_gen();
+		parse(&end, global);
+		heat_gen(global, player);
 		//resolve(&end, global);
-		free_round(global, heat_size);
+		free_round(global);
 	}
 	//free_global();
 	return (0);

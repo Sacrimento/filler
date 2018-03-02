@@ -6,13 +6,13 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:29:06 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 15:59:05 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 16:14:53 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void 	free_round(t_global *global, int heat_size)
+void 	free_round(t_global *global)
 {
 	int		i;
 
