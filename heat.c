@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:01:40 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 17:57:16 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:00:47 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		get_hotter(t_global *global, int x, int y)
 		min = global->heat[y + 1][x];
 	if (y - 1 > -1  && global->heat[y - 1][x] != -42 && global->heat[y - 1][x] != -1 && global->heat[y - 1][x] < min)
 		min = global->heat[y - 1][x];
-	// ft_printf("MIN : %d | COO : %d %d\n", min, y, x);
 	return (min == 1337 ? -42 : min + 1);
 }
 
@@ -77,27 +76,6 @@ void 	init_players(t_global *global, int player)
 	}
 }
 
-int		init_heat(t_global *global, int player)
-{
-	int		i;
-	int		j;
-
-	if(!(global->heat = (int**)ft_memalloc(sizeof(int*) * global->size.y)))
-		return (1);
-	i = 0;
-	while (i < global->size.y)
-	{
-		j = 0;
-		if (!(global->heat[i] = (int*)ft_memalloc(sizeof(int) * global->size.x)))
-			return (1);
-		while (j < global->size.x)
-			global->heat[i][j++] = -42;
-		i++;
-	}
-	init_players(global, player);
-	return (0);
-}
-
 void 	apply_heat(t_global *global)
 {
 	int		i;
@@ -122,8 +100,22 @@ void 	apply_heat(t_global *global)
 
 int		heat_gen(t_global *global, int player)
 {
-	if (init_heat(global, player))
+	int		i;
+	int		j;
+
+	if(!(global->heat = (int**)ft_memalloc(sizeof(int*) * global->size.y)))
 		return (1);
+	i = 0;
+	while (i < global->size.y)
+	{
+		j = 0;
+		if (!(global->heat[i] = (int*)ft_memalloc(sizeof(int) * global->size.x)))
+			return (1);
+		while (j < global->size.x)
+			global->heat[i][j++] = -42;
+		i++;
+	}
+	init_players(global, player);
 	apply_heat(global);
 	affich(global);
 	return (0);
