@@ -6,61 +6,72 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/02/28 18:36:58 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 15:52:16 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void 	get_size(int *tab)
+void 	get_size(int *tab, int sta)
 {
 	char	*line;
 	int		i;
 
-	i = 8;
+	i = sta;
 	get_next_line(0, &line);
-	tab[0] = ft_atoi(&line[8]);
+	tab[0] = ft_atoi(&line[sta]);
 	while (ft_isdigit(line[i]))
 		i++;
 	i++;
 	tab[1] = ft_atoi(&line[i]);
+	ft_strdel(&line);
 }
 
 int		get_player(void)
 {
 	char	*line;
+	int		ret;
 
 	get_next_line(0, &line);
-	return ((int)(line[10] - '0'));
+	ret = (int)(line[10] - '0');
+	ft_strdel(&line);
+	return (ret);
 }
 
 int		global_init(t_global *global)
 {
 	int		size[2];
 
-	get_size(size);
-	if (!(global = ft_memalloc(sizeof(t_global)))
+	get_size(size, 8);
+
+	if (!(global->map = (char**)ft_memalloc(sizeof(char*) * size[1])) ||
+						!(global->heat = (int**)ft_memalloc(sizeof(int*) * size[1])))
 		return (1);
-	if (!(global->map = ft_memalloc(sizeof(char*) * size[1])) ||
-						!(global->heat = ft_memalloc(sizeof(char*) * size[1])))
-		return (1);
-	global->coo.x = size[0];
-	global->coo.y = size[1];
+	global->size.y = size[0];
+	global->size.x = size[1];
 	global->piece = NULL;
+	return (0);
 }
 
 int		main(void)
 {
 	int			player;
 	int			end;
-	t_global	global;
+	t_global	*global;
 
-	end = 0;
-	player = get_player();
-	if (global_init(&global))
+	end = -1;
+	if (!(global = (t_global*)ft_memalloc(sizeof(t_global))))
 		return (1);
-	//while (!end)
-	//	parse(&end);
-	ft_printf("Player : %d\n", player);
+	player = get_player();
+	if (global_init(global))
+		return (1);
+	//while (end)
+	{
+		parse(global);
+		//heat_gen();
+		//resolve(&end, global);
+		free_round(global, heat_size);
+	}
+	//free_global();
 	return (0);
 }
