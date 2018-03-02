@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 17:14:04 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 16:21:39 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 17:49:54 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void 	parse(int *end, t_global *global)
 		ft_printf("MAP %s\n", global->map[j++]);
 	heat_size = piece(global);
 	j = 0;
+	ft_printf("TEST\n");
 	while (global->piece[j])
 		ft_printf("PIECE %s\n", global->piece[j++]);
 }
