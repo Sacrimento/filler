@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:46:30 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 16:17:24 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:25:17 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ typedef struct	s_coo
 	int		y;
 }				t_coo;
 
+typedef struct	s_pos
+{
+	int 			heat;
+	t_coo			coo;
+	struct s_pos	*next;
+}				t_pos;
+
 typedef struct	s_global
 {
 	char	**map;
@@ -33,5 +40,6 @@ void 	parse(int *end, t_global *global);
 void 	get_size(int *tab, int sta);
 void 	free_round(t_global *global);
 int		heat_gen(t_global *global, int player);
+void 	resolve(int *end, t_global *global, char player);
 
 #endif
