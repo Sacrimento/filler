@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 19:24:10 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 14:00:59 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void 	get_size(int *tab, int sta)
 	int		i;
 
 	i = sta;
+	line = NULL;
 	get_next_line(0, &line);
 	tab[0] = ft_atoi(&line[sta]);
 	while (ft_isdigit(line[i]))
@@ -32,6 +33,7 @@ int		get_player(void)
 	char	*line;
 	int		ret;
 
+	line = NULL;
 	get_next_line(0, &line);
 	ret = (int)(line[10] - '0');
 	ft_strdel(&line);
@@ -59,19 +61,23 @@ int		main(void)
 	int			end;
 	t_global	*global;
 
+
 	end = -1;
 	if (!(global = (t_global*)ft_memalloc(sizeof(t_global))))
 		return (1);
 	player = get_player();
 	if (global_init(global))
 		return (1);
-	//while (end)
+	// global->fd = open("/dev/ttys000", O_RDWR);
+	// ft_printf("%d\n", global->fd);
+	// ft_putendl_fd("salut", global->fd);
+	while (end)
 	{
 		parse(&end, global);
 		heat_gen(global, player);
 		resolve(&end, global, (player == 1 ? 'O' : 'X'));
 		free_round(global);
 	}
-	//free_global();
+	free_global(global);
 	return (0);
 }

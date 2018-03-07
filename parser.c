@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 17:14:04 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 17:49:54 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:57:52 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		piece(t_global *global)
 	int		i;
 	int		size[2];
 
+	line = NULL;
 	get_size(size, 6);
 	if (!(global->piece = (char**)ft_memalloc(sizeof(char*)
 													* (size[0] + 1))))
@@ -38,6 +39,7 @@ void 	fill_lines(t_global *global)
 	char	*line;
 
 	i = 0;
+	line = NULL;
 	while (i < global->size.y)
 	{
 		get_next_line(0, &line);
@@ -51,6 +53,7 @@ void 	trash_line(void)
 {
 	char	*line;
 
+	line = NULL;
 	get_next_line(0, &line);
 	ft_strdel(&line);
 }
@@ -66,12 +69,11 @@ void 	parse(int *end, t_global *global)
 	*end = 1;
 	trash_line();
 	fill_lines(global);
-	int j = 0;
-	while (global->map[j])
-		ft_printf("MAP %s\n", global->map[j++]);
+	// int j = 0;
+	// while (global->map[j])
+	// 	ft_printf("MAP %s\n", global->map[j++]);
 	heat_size = piece(global);
-	j = 0;
-	ft_printf("TEST\n");
-	while (global->piece[j])
-		ft_printf("PIECE %s\n", global->piece[j++]);
+	// j = 0;
+	// while (global->piece[j])
+	// 	ft_printf("PIECE %s\n", global->piece[j++]);
 }

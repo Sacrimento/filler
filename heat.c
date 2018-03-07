@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:01:40 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 19:00:47 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:31:10 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ int		get_hotter(t_global *global, int x, int y)
 	int		min;
 
 	min = 1337;
-	if (x + 1 < global->size.x && global->heat[y][x + 1] != -42 && global->heat[y][x + 1] != -1 && global->heat[y][x + 1] < min)
+	//affich(global);
+	if (x + 1 < global->size.x && global->heat[y][x + 1] != -42
+		&& global->heat[y][x + 1] != -1 && global->heat[y][x + 1] < min)
 		min = global->heat[y][x + 1];
-	if (x - 1 > -1 && global->heat[y][x - 1] != -42 && global->heat[y][x - 1] != -1 && global->heat[y][x - 1] < min)
+	if (x - 1 > -1 && global->heat[y][x - 1] != -42
+		 && global->heat[y][x - 1] != -1 && global->heat[y][x - 1] < min)
 		min = global->heat[y][x - 1];
-	if (y + 1 < global->size.y && global->heat[y + 1][x] != -42 && global->heat[y + 1][x] != -1 && global->heat[y + 1][x] < min)
+	if (y + 1 < global->size.y && global->heat[y + 1][x] != -42
+		 && global->heat[y + 1][x] != -1 && global->heat[y + 1][x] < min)
 		min = global->heat[y + 1][x];
-	if (y - 1 > -1  && global->heat[y - 1][x] != -42 && global->heat[y - 1][x] != -1 && global->heat[y - 1][x] < min)
+	if (y - 1 > -1  && global->heat[y - 1][x] != -42
+		 && global->heat[y - 1][x] != -1 && global->heat[y - 1][x] < min)
 		min = global->heat[y - 1][x];
 	return (min == 1337 ? -42 : min + 1);
 }
@@ -56,7 +61,7 @@ int		is_heat_done(t_global *global)
 	return (1);
 }
 
-void 	init_players(t_global *global, int player)
+void 	init_players(t_global *global, char player)
 {
 	int		i;
 	int		j;
@@ -67,9 +72,9 @@ void 	init_players(t_global *global, int player)
 		j = 0;
 		while (j < global->size.x)
 		{
+			global->map[i][j] = ft_toupper(global->map[i][j]);
 			if (global->map[i][j] != '.')
-				global->heat[i][j] = (player == 1 &&
-				(global->map[i][j] == 'x' || global->map[i][j] == 'X') ? 0 : -1);
+				global->heat[i][j] = (global->map[i][j] == player ? -1 : 0);
 			j++;
 		}
 		i++;
@@ -91,6 +96,7 @@ void 	apply_heat(t_global *global)
 			{
 				if (global->heat[i][j] == -42)
 					global->heat[i][j] = get_hotter(global, j, i);
+				//ft_printf("[%d][%d][%d]\n",i,j, global->heat[i][j]);
 				j++;
 			}
 			i++;
@@ -115,8 +121,8 @@ int		heat_gen(t_global *global, int player)
 			global->heat[i][j++] = -42;
 		i++;
 	}
-	init_players(global, player);
+	init_players(global, (player == 1 ? 'O' : 'X'));
 	apply_heat(global);
-	affich(global);
+	//affich(global);
 	return (0);
 }

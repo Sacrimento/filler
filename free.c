@@ -6,15 +6,23 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:29:06 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 17:11:43 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:58:38 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
+void 	free_global(t_global *global)
+{
+	
+	ft_memdel((void**)&global->map);
+	ft_memdel((void**)&global->heat);
+	ft_memdel((void**)&global);
+}
+
 void 	free_round(t_global *global)
 {
-	int		i;
+	int		i = 0;
 
 	i = 0;
 	while (global->map[i])

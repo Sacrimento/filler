@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:46:30 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/02 19:25:17 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 13:38:17 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_pos
 typedef struct	s_global
 {
 	char	**map;
+	int		fd;
 	int		**heat;
 	char	**piece;
 	t_coo	size;
@@ -41,5 +42,6 @@ void 	get_size(int *tab, int sta);
 void 	free_round(t_global *global);
 int		heat_gen(t_global *global, int player);
 void 	resolve(int *end, t_global *global, char player);
+void 	free_global(t_global *global);
 
 #endif
