@@ -6,26 +6,22 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 15:22:41 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/10 16:50:45 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-
-void 	get_size(int *tab, int sta, t_global *global)
+void	get_size(int *tab, int sta, t_global *global)
 {
 	char	*line;
 	int		i;
 
 	i = sta;
 	line = NULL;
-	// ft_putendl_fd("KAKA1", global->fd);
 	get_next_line(0, &line);
-	// ft_putendl_fd("KAKA2", global->fd);
 	ft_putendl_fd(line, global->fd);
 	tab[0] = ft_atoi(&line[sta]);
-	// ft_putendl_fd("KAKA3", global->fd);
 	while (ft_isdigit(line[i]))
 		i++;
 	i++;
@@ -49,10 +45,9 @@ int		global_init(t_global *global)
 {
 	int		size[2];
 
-
 	get_size(size, 8, global);
 	if (!(global->map = (char**)ft_memalloc(sizeof(char*) * size[1])) ||
-						!(global->heat = (int**)ft_memalloc(sizeof(int*) * (size[1] + 1))))
+		!(global->heat = (int**)ft_memalloc(sizeof(int*) * (size[1] + 1))))
 		return (1);
 	global->size.y = size[0];
 	global->size.x = size[1];
@@ -66,7 +61,6 @@ int		main(void)
 	int			end;
 	t_global	*global;
 
-
 	end = -1;
 	if (!(global = (t_global*)ft_memalloc(sizeof(t_global))))
 		return (1);
@@ -77,15 +71,10 @@ int		main(void)
 		return (1);
 	while (end)
 	{
-		ft_putendl_fd("Debut boucle", global->fd);
 		parse(&end, global);
-		ft_putendl_fd("Parsing done", global->fd);
 		heat_gen(global, player);
-		ft_putendl_fd("Heat done", global->fd);
 		resolve(&end, global, (player == 1 ? 'O' : 'X'));
-		ft_putendl_fd("Resolve done", global->fd);
 		free_round(global);
-		ft_putendl_fd("Fin boucle", global->fd);
 	}
 	free_global(global);
 	return (0);
