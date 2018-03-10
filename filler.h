@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:46:30 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/07 13:38:17 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/07 15:50:45 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_global
 }				t_global;
 
 void 	parse(int *end, t_global *global);
-void 	get_size(int *tab, int sta);
+void 	get_size(int *tab, int sta, t_global *global);
 void 	free_round(t_global *global);
 int		heat_gen(t_global *global, int player);
 void 	resolve(int *end, t_global *global, char player);

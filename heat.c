@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 16:01:40 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/07 13:31:10 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/10 16:12:53 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void 	init_players(t_global *global, char player)
 		{
 			global->map[i][j] = ft_toupper(global->map[i][j]);
 			if (global->map[i][j] != '.')
-				global->heat[i][j] = (global->map[i][j] == player ? -1 : 0);
+				global->heat[i][j] = (global->map[i][j] == player ? -42 : 0);
 			j++;
 		}
 		i++;
@@ -96,11 +96,11 @@ void 	apply_heat(t_global *global)
 			{
 				if (global->heat[i][j] == -42)
 					global->heat[i][j] = get_hotter(global, j, i);
-				//ft_printf("[%d][%d][%d]\n",i,j, global->heat[i][j]);
 				j++;
 			}
 			i++;
 		}
+		// affich(global);
 	}
 }
 
@@ -122,7 +122,9 @@ int		heat_gen(t_global *global, int player)
 		i++;
 	}
 	init_players(global, (player == 1 ? 'O' : 'X'));
+	ft_putendl_fd("  Init_players() done", global->fd);
 	apply_heat(global);
+	ft_putendl_fd("  apply_heat() done", global->fd);
 	//affich(global);
 	return (0);
 }

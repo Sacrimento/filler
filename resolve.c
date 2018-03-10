@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 19:06:31 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/07 13:55:57 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/10 15:33:35 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,11 @@ void 	resolve(int *end, t_global *global, char player)
 	}
 	if (best_coo.x == 0 && best_coo.y == 0)
 		*end = 0;
-	ft_printf("%d %d\n", best_coo.x, best_coo.y);
+	 // ft_putnbr_fd(best_coo.x, global->fd);
+	 // ft_putendl_fd("", global->fd);
+	 // ft_putnbr_fd(best_coo.y, global->fd);
+	 // ft_putendl_fd("", global->fd);
+
+	ft_printf("%d %d\n", best_coo.y, best_coo.x);
 	free_pos(del);
  }
