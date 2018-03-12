@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:29:06 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 16:37:04 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:21:52 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	free_global(t_global *global)
 {
 	ft_memdel((void**)&global->map);
-	ft_memdel((void**)&global->heat);
 	ft_memdel((void**)&global);
 }
 
@@ -25,10 +24,10 @@ void	free_round(t_global *global)
 
 	i = 0;
 	while (global->map[i])
-		ft_memdel((void**)&global->map[i++]);
-	i = 0;
-	while (i < global->size.y)
+	{
+		ft_memdel((void**)&global->map[i]);
 		ft_memdel((void**)&global->heat[i++]);
+	}
 	ft_memdel((void**)&global->heat);
 	i = 0;
 	while (global->piece[i])

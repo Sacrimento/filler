@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 17:14:04 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 17:04:33 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/10 17:39:31 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		piece(t_global *global)
 	int		size[2];
 
 	line = NULL;
-	get_size(size, 6, global);
+	get_size(size, 6);
 	if (!(global->piece = (char**)ft_memalloc(sizeof(char*)
 													* ((size[0]) + 1))))
 		return (1);

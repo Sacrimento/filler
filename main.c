@@ -6,13 +6,13 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 16:50:45 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/12 15:22:12 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	get_size(int *tab, int sta, t_global *global)
+void	get_size(int *tab, int sta)
 {
 	char	*line;
 	int		i;
@@ -20,7 +20,6 @@ void	get_size(int *tab, int sta, t_global *global)
 	i = sta;
 	line = NULL;
 	get_next_line(0, &line);
-	ft_putendl_fd(line, global->fd);
 	tab[0] = ft_atoi(&line[sta]);
 	while (ft_isdigit(line[i]))
 		i++;
@@ -45,9 +44,8 @@ int		global_init(t_global *global)
 {
 	int		size[2];
 
-	get_size(size, 8, global);
-	if (!(global->map = (char**)ft_memalloc(sizeof(char*) * size[1])) ||
-		!(global->heat = (int**)ft_memalloc(sizeof(int*) * (size[1] + 1))))
+	get_size(size, 8);
+	if (!(global->map = (char**)ft_memalloc(sizeof(char*) * (size[0] + 1))))
 		return (1);
 	global->size.y = size[0];
 	global->size.x = size[1];
@@ -64,8 +62,6 @@ int		main(void)
 	end = -1;
 	if (!(global = (t_global*)ft_memalloc(sizeof(t_global))))
 		return (1);
-	global->fd = open("/dev/ttys001", O_RDWR);
-	ft_putendl_fd("MAIN", global->fd);
 	player = get_player();
 	if (global_init(global))
 		return (1);
