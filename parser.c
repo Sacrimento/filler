@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 17:14:04 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 17:39:31 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:47:12 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ int		piece(t_global *global)
 	get_size(size, 6);
 	if (!(global->piece = (char**)ft_memalloc(sizeof(char*)
 													* ((size[0]) + 1))))
-		return (1);
+		return (-1);
 	i = -1;
 	while (++i < size[0])
 	{
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) != 1)
+			return (0);
 		global->piece[i] = line;
 	}
 	global->piece[i] = 0;
 	return (size[0]);
 }
 
-void	fill_lines(t_global *global)
+int		fill_lines(t_global *global)
 {
 	int		i;
 	char	*line;
@@ -42,28 +43,37 @@ void	fill_lines(t_global *global)
 	line = NULL;
 	while (i < global->size.y)
 	{
-		get_next_line(0, &line);
+		if (get_next_line(0, &line) != 1)
+			return (1);
 		global->map[i++] = ft_strsub(line, 4, ft_strlen(line) - 4);
 		ft_strdel(&line);
 	}
 	global->map[i] = 0;
+	return (0);
 }
 
-void	trash_line(void)
+int		trash_line(void)
 {
 	char	*line;
 
 	line = NULL;
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) != 1)
+		return (1);
 	ft_strdel(&line);
+	return (0);
 }
 
-void	parse(int *end, t_global *global)
+int		parse(int *end, t_global *global)
 {
 	if (*end != -1)
-		trash_line();
+		if (trash_line())
+			return (1);
 	*end = 1;
-	trash_line();
-	fill_lines(global);
-	piece(global);
+	if (trash_line())
+		return (1);
+	if (fill_lines(global))
+		return (1);
+	if (piece(global) == -1)
+		return (1);
+	return (0);
 }

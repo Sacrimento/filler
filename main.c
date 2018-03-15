@@ -6,26 +6,28 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:47:55 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/12 15:22:12 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:47:36 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	get_size(int *tab, int sta)
+int		get_size(int *tab, int sta)
 {
 	char	*line;
 	int		i;
 
 	i = sta;
 	line = NULL;
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) != 1)
+		return (1);
 	tab[0] = ft_atoi(&line[sta]);
 	while (ft_isdigit(line[i]))
 		i++;
 	i++;
 	tab[1] = ft_atoi(&line[i]);
 	ft_strdel(&line);
+	return (0);
 }
 
 int		get_player(void)
@@ -44,7 +46,8 @@ int		global_init(t_global *global)
 {
 	int		size[2];
 
-	get_size(size, 8);
+	if (get_size(size, 8))
+		return (1);
 	if (!(global->map = (char**)ft_memalloc(sizeof(char*) * (size[0] + 1))))
 		return (1);
 	global->size.y = size[0];
@@ -67,8 +70,10 @@ int		main(void)
 		return (1);
 	while (end)
 	{
-		parse(&end, global);
-		heat_gen(global, player);
+		if (parse(&end, global))
+			return (1);
+		if (heat_gen(global, player))
+			return (1);
 		resolve(&end, global, (player == 1 ? 'O' : 'X'));
 		free_round(global);
 	}
