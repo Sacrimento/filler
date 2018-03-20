@@ -6,7 +6,7 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 15:46:30 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/15 16:46:31 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/20 11:42:29 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void			free_round(t_global *global);
 int				heat_gen(t_global *global, int player);
 void			resolve(int *end, t_global *global, char player);
 void			free_global(t_global *global);
+void			free_pos(t_pos *pos);
 
 #endif

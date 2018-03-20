@@ -6,19 +6,24 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 19:06:31 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/10 17:06:00 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/20 12:35:15 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void		free_pos(t_pos *pos)
+int			get_negative(t_global *g, int coo)
 {
-	if (!pos)
-		return ;
-	if (pos->next)
-		free_pos(pos->next);
-	ft_memdel((void**)&pos);
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (g->piece[0][i])
+		i++;
+	while (g->piece[j])
+		j++;
+	return (coo == 1 ? -i + 1 : -j + 1);
 }
 
 t_pos		*pos_new(t_pos *pos, int x, int y, int score)
@@ -41,48 +46,48 @@ t_pos		*pos_new(t_pos *pos, int x, int y, int score)
 	return (beg);
 }
 
-int			can_place(t_global *global, int x, int y, char player)
+int			can_place(t_global *g, int x, int y, char player)
 {
 	int		score;
 	int		same;
-	int		i;
-	int		j;
+	t_coo	coo;
 
-	j = -1;
+	coo.y = -1;
 	same = 0;
 	score = 0;
-	while (global->piece[++j] != 0)
-	{
-		i = -1;
-		while (global->piece[j][++i])
-		{
-			if (global->piece[j][i] == '*' && ((j + y >= global->size.y
-					|| i + x >= global->size.x) || (global->map[j + y][i + x]
-								!= player && global->map[j + y][i + x] != '.')))
+	while (g->piece[++coo.y] != 0 && (coo.x = -1))
+		while (g->piece[coo.y][++coo.x])
+			if (g->piece[coo.y][coo.x] == '*' && ((coo.y + y >=
+g->size.y || coo.x + x >= g->size.x) || coo.y + y < 0 || x + coo.x < 0))
 				return (-1);
-			else if (global->piece[j][i] == '*' &&
-											global->map[y + j][x + i] == player)
+			else if (coo.x + x >= 0 && y + coo.y >= 0 && (coo.y + y <
+				g->size.y && coo.x + x < g->size.x)
+	&& g->piece[coo.y][coo.x] == '*' && (g->map[coo.y + y][coo.x + x]
+		!= player && g->map[coo.y + y][coo.x + x] != ft_tolower(player)
+							&& g->map[coo.y + y][coo.x + x] != '.'))
+				return (-1);
+			else if (g->piece[coo.y][coo.x] == '*' &&
+						(g->map[y + coo.y][x + coo.x] == player
+					|| g->map[y + coo.y][x + coo.x] == ft_tolower(player)))
 				same++;
-			else if (global->piece[j][i] == '*')
-				score += global->heat[j + y][i + x];
-		}
-	}
+			else if (g->piece[coo.y][coo.x] == '*')
+				score += g->heat[coo.y + y][coo.x + x];
 	return (same == 1 ? score : -1);
 }
 
-t_pos		*placer(t_global *global, t_pos *pos, char player)
+t_pos		*placer(t_global *g, t_pos *pos, char player)
 {
 	int		i;
 	int		j;
 	int		score;
 
-	i = 0;
-	while (global->map[i] != 0)
+	i = get_negative(g, 1);
+	while (i < g->size.y)
 	{
-		j = 0;
-		while (global->map[i][j])
+		j = get_negative(g, 2);
+		while (j < g->size.x)
 		{
-			if ((score = can_place(global, j, i, player)) != -1)
+			if ((score = can_place(g, j, i, player)) != -1)
 				if (!(pos = pos_new(pos, j, i, score)))
 					return (NULL);
 			j++;
@@ -92,18 +97,18 @@ t_pos		*placer(t_global *global, t_pos *pos, char player)
 	return (pos);
 }
 
-void		resolve(int *end, t_global *global, char player)
+void		resolve(int *end, t_global *g, char player)
 {
 	t_pos		*pos;
 	t_pos		*del;
 	t_coo		best_coo;
 	int			heat;
 
-	best_coo.x = 0;
-	best_coo.y = 0;
+	best_coo.x = -1;
+	best_coo.y = -1;
 	heat = 1337;
 	pos = NULL;
-	del = placer(global, pos, player);
+	del = placer(g, pos, player);
 	pos = del;
 	while (pos)
 	{
@@ -115,7 +120,7 @@ void		resolve(int *end, t_global *global, char player)
 		}
 		pos = pos->next;
 	}
-	if (best_coo.x == 0 && best_coo.y == 0)
+	if (best_coo.x == -1 && best_coo.y == -1)
 		*end = 0;
 	ft_printf("%d %d\n", best_coo.y, best_coo.x);
 	free_pos(del);

@@ -6,11 +6,20 @@
 /*   By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:29:06 by abouvero          #+#    #+#             */
-/*   Updated: 2018/03/12 15:21:52 by abouvero         ###   ########.fr       */
+/*   Updated: 2018/03/20 11:42:53 by abouvero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+void	free_pos(t_pos *pos)
+{
+	if (!pos)
+		return ;
+	if (pos->next)
+		free_pos(pos->next);
+	ft_memdel((void**)&pos);
+}
 
 void	free_global(t_global *global)
 {

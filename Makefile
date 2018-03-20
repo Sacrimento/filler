@@ -6,7 +6,7 @@
 #    By: abouvero <abouvero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/10 17:01:23 by abouvero          #+#    #+#              #
-#    Updated: 2018/03/15 15:50:26 by abouvero         ###   ########.fr        #
+#    Updated: 2018/03/20 11:00:09 by abouvero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC = main.c \
 	  free.c \
 
 OBJ = $(SRC:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 all: $(NAME)
 
